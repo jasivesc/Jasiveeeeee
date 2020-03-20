@@ -11,6 +11,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
+import java.awt.Color;
 
 /**
  *
@@ -41,7 +43,9 @@ public class sumaDeComp extends javax.swing.JFrame {
 		txtOrigen = new javax.swing.JTextField();
 		jScrollPane2 = new javax.swing.JScrollPane();
 		txtPrueba = new javax.swing.JTextArea();
-		
+		resultadoOrigen = new javax.swing.JLabel();
+		resultadoOrigen.setBackground(Color.WHITE);
+		resultadoOrigen.setOpaque(true);
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		txtOracion.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -71,29 +75,43 @@ public class sumaDeComp extends javax.swing.JFrame {
 		txtPrueba.setRows(5);
 		txtPrueba.setWrapStyleWord(true);
 		jScrollPane2.setViewportView(txtPrueba);
+		
+
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(layout.createSequentialGroup()
-				.addGap(58)
-				.addGroup(layout.createParallelGroup(Alignment.LEADING)
-						.addGroup(layout.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
-								.addGap(18)
-								.addComponent(txtOrigen, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
-								.addGap(45).addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE,
-										GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(txtOracion, GroupLayout.PREFERRED_SIZE, 455, GroupLayout.PREFERRED_SIZE))
-				.addContainerGap(192, Short.MAX_VALUE)));
-		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(layout.createSequentialGroup()
-				.addGap(19).addComponent(txtOracion, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+		layout.setHorizontalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addGap(58)
+					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+						.addComponent(txtOracion, GroupLayout.PREFERRED_SIZE, 455, GroupLayout.PREFERRED_SIZE)
+						.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(resultadoOrigen, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+								.addGroup(Alignment.LEADING, layout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)))
+							.addGap(18)
+							.addComponent(txtOrigen, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
+							.addGap(45)
+							.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(192, Short.MAX_VALUE))
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addGap(19)
+					.addComponent(txtOracion, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(layout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(txtOrigen, GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-								.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))
+							.addComponent(txtOrigen, GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+							.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addComponent(jScrollPane1, 0, 0, Short.MAX_VALUE))
-				.addContainerGap(73, Short.MAX_VALUE)));
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(resultadoOrigen, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+					.addGap(43))
+		);
 		getContentPane().setLayout(layout);
 
 		pack();
@@ -101,25 +119,26 @@ public class sumaDeComp extends javax.swing.JFrame {
 
 	private void txtOracionKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtOracionKeyReleased
 		String cadena = txtOracion.getText();
-		String valores = "";
-		
+		resultadoOrigen.setText("");
 		Vector<Object> fila;
 		
 		//Limpia la tabla 
         for(int i = tModel.getRowCount(); i>0; i--)
         	tModel.removeRow(i-1);
-        		
+        	
+        int resultado =0;
 		for (int a = 0; a < cadena.length(); a++) {
 			// conversión a binario de cada uno de los caracteres
+			
+			resultado+= (int) cadena.charAt(a);
 			String temporal = Integer.toBinaryString(cadena.charAt(a));
 			fila    = new Vector<Object>();
         	fila.add(cadena.charAt(a));
             fila.add(temporal);
             tModel.addRow(fila);
-			
-			//txtOrigen.setText(valores + "\n");
-			//txtPrueba.setText(valores + "\n");
 		}
+		String temp = Integer.toBinaryString(resultado);
+		resultadoOrigen.setText(temp);
 		
 	}// GEN-LAST:event_txtOracionKeyReleased
 
@@ -173,9 +192,9 @@ public class sumaDeComp extends javax.swing.JFrame {
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JScrollPane jScrollPane2;
 	private javax.swing.JTable jTableOrigen;
+	private javax.swing.JLabel resultadoOrigen;
 	private javax.swing.JTextField txtOracion;
 	private javax.swing.JTextField txtOrigen;
 	private javax.swing.JTextArea txtPrueba;
 	private javax.swing.table.DefaultTableModel tModel;
-	// End of variables declaration//GEN-END:variables
 }
